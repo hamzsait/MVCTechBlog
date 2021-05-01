@@ -20,7 +20,16 @@ router.get("/login", async (req,res) => {
     }
 })
 
-router.get("dashboard", async (res,res) => {
+router.get("/signup", async (req,res) => {
+    try{
+        res.render('signup')
+    }
+    catch(err){
+        res.json(err)
+    }
+})
+
+router.get("/dashboard", async (req,res) => {
     try{
         res.render("dashboard")
     }
