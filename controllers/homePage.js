@@ -10,3 +10,5 @@ router.get("/", async (req, res) => {
         res.json(err)
     }
 })
+
+module.exports = router
