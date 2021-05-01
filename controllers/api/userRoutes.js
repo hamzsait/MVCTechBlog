@@ -25,6 +25,7 @@ router.post('/signup',async (req,res)=>{
                 password:req.body.password
            })
        }
+       res.redirect(302,'/successlogin')
     }
     catch(err){
         console.log(err)
