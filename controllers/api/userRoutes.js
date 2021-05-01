@@ -10,4 +10,13 @@ router.post('/login', async (req,res) => {
     }
 })
 
+router.post('/signup',async (req,res)=>{
+    try{
+        console.log(req.body)
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
 module.exports = router
