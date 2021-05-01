@@ -13,11 +13,22 @@ router.post('/login', async (req,res) => {
 
 router.post('/signup',async (req,res)=>{
     try{
-        console.log(req.body)
-        console.log(User.findAll())
+       var notFound = true;
+       (await User.findAll()).map(user => {
+            if (user.username == req.body.username){
+                notFound = false
+            }
+       })
+       if (notFound){
+            await User.create({
+                username:req.body.username,
+                password:req.body.password
+           })
+       }
     }
     catch(err){
         console.log(err)
+        res.status(400).json(err)
     }
 })
 
