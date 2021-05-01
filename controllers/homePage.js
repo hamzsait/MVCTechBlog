@@ -36,4 +36,13 @@ router.get("/dashboard", async (req,res) => {
     }
 })
 
+router.get('/successlogin', (req,res) => {
+    try{
+        res.render("successlogin")
+    }
+    catch(err){
+        res.json(err)
+    }
+})
+
 module.exports = router
