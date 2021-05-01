@@ -1,6 +1,4 @@
 const router = require('express').Router();
-// add database connection here later
-// add authention function in utils later
 
 router.get("/home", async (req, res) => {
     try{
