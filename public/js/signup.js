@@ -14,7 +14,7 @@ document.querySelector("#signupButton").addEventListener("click", async () => {
        })
 
        if (response.ok) {
-        document.location.replace('/');
+        document.location.replace('/successlogin');
        } else {
         alert('Failed to sign up.');
        }
