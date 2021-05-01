@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-router.get("/home", async (req, res) => {
+router.get("/", async (req, res) => {
     try{
         res.render('homepage')
     }
@@ -36,9 +36,9 @@ router.get("/dashboard", async (req,res) => {
     }
 })
 
-router.get('/successlogin', (req,res) => {
+router.get('/loginConfirm', (req,res) => {
     try{
-        res.render("successlogin")
+        res.render("loginConfirm")
     }
     catch(err){
         res.json(err)
