@@ -13,7 +13,7 @@ router.post('/login', async (req,res) => {
 
 router.post('/signup',async (req,res)=>{
     try{
-       var notFound = true;
+       let notFound = true;
        (await User.findAll()).map(user => {
             if (user.username == req.body.username){
                 notFound = false
@@ -24,8 +24,9 @@ router.post('/signup',async (req,res)=>{
                 username:req.body.username,
                 password:req.body.password
            })
+         res.redirect('/dashboard')
        }
-       res.redirect(302,'/successlogin')
+       res.redirect('/dashboard')
     }
     catch(err){
         console.log(err)
