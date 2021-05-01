@@ -1,7 +1,8 @@
 document.querySelector("#loginButton").addEventListener("click", async () => {
-    const username = (document.querySelector("#floatingInput").innerHTML)
-    const password = (document.querySelector("#floatingPassword").innerHTML)
-
+    const username = (document.querySelector("#floatingInput").value)
+    const password = (document.querySelector("#floatingPassword").value)
+    console.log(username)
+    console.log(password)
     if(username && password){
 
        const response =  await fetch('/api/users/login',{
