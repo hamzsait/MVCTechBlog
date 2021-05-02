@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
             })
         })
         console.log(output)
-        res.status(200).render('homepage', { data: output })
+        res.status(200).render('homepage', { projects: output })
     }
     catch (err){
         res.json(err)
