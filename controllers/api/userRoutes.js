@@ -41,18 +41,33 @@ router.post('/signup',async (req,res)=>{
             await User.create({
                 username:req.body.username,
                 password:req.body.password
-           })
-           res.render('signupConfirm',{logged_in:req.session.logged_in})
-        //    req.session.save(() => {
-        //         req.session.user_id = user.id;
-        //         req.session.logged_in = true;
-                
-        //    }
+            }).then(user=>{
+                req.session.save(() => {
+                        req.session.user_id = user.id;
+                        req.session.logged_in = true;
+                        res.render('signupConfirm',{logged_in:req.session.logged_in})
+                })
+            })
         }
     }
     catch(err){
         console.log(err)
         res.status(400).json(err)
+    }
+})
+
+router.post('/logout',async (req,res)=>{
+    try{
+        if(req.sessions.logged_in){
+            req.session.destroy(() =>{
+                res.status(204).end()
+            })
+        } else{
+            res.status(404).end()
+        }
+    }
+    catch(err){
+        res.status(500).end()
     }
 })
 
