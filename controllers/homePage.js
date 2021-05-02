@@ -2,19 +2,26 @@ const router = require('express').Router();
 const { User, Project } = require('../models');
 
 
+async function getDashboardData(){
+    output = []
+    const projects = await Project.findAll()
+    projects.map(async (project) => {
+        const user = await User.findByPk(project.user_id)
+        output.push({
+            name: project.name,
+            description: project.description,
+            user: user.username
+        })
+    })
+    return output
+}
+
 router.get("/", async (req, res) => {
     try{
-        output = []
-        const projects = await Project.findAll()
-        projects.map(async (project) => {
-            const user = await User.findByPk(project.user_id)
-            output.push({
-                name: project.name,
-                description: project.description,
-                user: user.username
-            })
-        })
+        const renderedData = await getDashboardData().then(output => {
+        console.log(output)
         res.status(200).render('homepage', { projects: output })
+        })
     }
     catch (err){
         res.json(err)
