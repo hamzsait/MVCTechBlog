@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
     try{
         const renderedData = await getDashboardData().then(output => {
         console.log(output)
-        res.status(200).render('homepage', { projects: output })
+        res.status(200).render('homepage', { projects: output, loggedIn:req.session.logged_in })
         })
     }
     catch (err){
@@ -66,6 +66,15 @@ router.get("/dashboard", async (req,res) => {
 })
 
 router.get('/loginConfirm', (req,res) => {
+    try{
+        res.render("loginConfirm")
+    }
+    catch(err){
+        res.json(err)
+    }
+})
+
+router.get('/signUpConfirm', (req,res) => {
     try{
         res.render("loginConfirm")
     }

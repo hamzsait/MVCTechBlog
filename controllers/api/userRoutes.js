@@ -1,10 +1,27 @@
 const router = require('express').Router();
+const bycrpt = require('bcrypt');
 const { User } = require('../../models');
 
 router.post('/login', async (req,res) => {
     try {
-        console.log(req.body)
-        console.log("hello")
+        const user = await User.findOne({where:{username:req.body.username}})
+        if(!user){
+            res.status(400).json({message:"Incorrect username"})
+            return
+        }
+
+        const validPassword = await user.checkPassword(req.body.password)
+
+        if(!validPassword){
+            res.status(400).json({message:"Invalid password"})
+            return
+        }
+        req.session.save(() => {
+            req.session.user_id = user.id;
+            req.session.logged_in = true;
+            
+            res.render("homepage",{logged_in:req.session.logged_in});
+        })
     }
     catch (err){
         console.log(err)
@@ -17,16 +34,21 @@ router.post('/signup',async (req,res)=>{
        (await User.findAll()).map(user => {
             if (user.username == req.body.username){
                 notFound = false
+                res.status(403).json({message:"User already exists!"})
             }
-            res.send("User already exists")
        })
        if (notFound){
             await User.create({
                 username:req.body.username,
                 password:req.body.password
            })
-           res.redirect('/loginConfirm')
-       }
+           req.session.save(() => {
+                req.session.user_id = user.id;
+                req.session.logged_in = true;
+                res.redirect('/signupConfirm',{logged_in:req.session.logged_in})
+           }
+        )
+        }
     }
     catch(err){
         console.log(err)
