@@ -76,7 +76,7 @@ router.get('/loginConfirm', (req,res) => {
 
 router.get('/signUpConfirm', (req,res) => {
     try{
-        res.render("loginConfirm")
+        res.render("signUpConfirm")
     }
     catch(err){
         res.json(err)
