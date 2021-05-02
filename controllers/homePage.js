@@ -1,8 +1,20 @@
 const router = require('express').Router();
+const { Project } = require('../models');
+
 
 router.get("/", async (req, res) => {
     try{
-        res.render('homepage')
+        output = []
+        const projects = await Project.findAll()
+        projects.map(project => {
+            output.push({
+                name: project.name,
+                description: project.description,
+                user: project.user_id
+            })
+        })
+        console.log(output)
+        res.status(200).render('homepage',output)
     }
     catch (err){
         res.json(err)

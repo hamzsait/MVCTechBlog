@@ -18,15 +18,15 @@ router.post('/signup',async (req,res)=>{
             if (user.username == req.body.username){
                 notFound = false
             }
+            res.send("User already exists")
        })
        if (notFound){
             await User.create({
                 username:req.body.username,
                 password:req.body.password
            })
-         res.redirect('/dashboard')
+           res.redirect('/loginConfirm')
        }
-       res.redirect('/dashboard')
     }
     catch(err){
         console.log(err)
