@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
     try{
         const renderedData = await getDashboardData().then(output => {
         console.log(output)
-        res.status(200).render('homepage', { projects: output, loggedIn:req.session.logged_in })
+        res.status(200).render('homepage', { projects: output, logged_in:req.session.logged_in })
         })
     }
     catch (err){
@@ -58,7 +58,7 @@ router.get("/dashboard", async (req,res) => {
                 user: user.username
             })
         })
-        res.status(200).render('homepage', { projects: output })
+        res.status(200).render('homepage', { projects: output, logged_in:req.session.logged_in })
     }
     catch (err){
         res.json(err)
