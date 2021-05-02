@@ -1,3 +1,1 @@
-setTimeout(function(){
-    document.location.replace("/")
-},4000)
+setTimeout(function(){window.location="/"}, 3000)
