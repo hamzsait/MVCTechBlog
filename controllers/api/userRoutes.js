@@ -42,12 +42,12 @@ router.post('/signup',async (req,res)=>{
                 username:req.body.username,
                 password:req.body.password
            })
-           req.session.save(() => {
-                req.session.user_id = user.id;
-                req.session.logged_in = true;
-                res.redirect('/signupConfirm',{logged_in:req.session.logged_in})
-           }
-        )
+           res.render('signupConfirm',{logged_in:req.session.logged_in})
+        //    req.session.save(() => {
+        //         req.session.user_id = user.id;
+        //         req.session.logged_in = true;
+                
+        //    }
         }
     }
     catch(err){
