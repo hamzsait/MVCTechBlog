@@ -4,6 +4,7 @@ const { User } = require('../../models');
 
 router.post('/login', async (req,res) => {
     try {
+        
         const user = await User.findOne({where:{username:req.body.username}})
         if(!user){
             res.status(400).json({message:"Incorrect username"})
@@ -11,16 +12,16 @@ router.post('/login', async (req,res) => {
         }
 
         const validPassword = await user.checkPassword(req.body.password)
-
         if(!validPassword){
             res.status(400).json({message:"Invalid password"})
             return
         }
-        req.session.save(() => {
+
+        req.session.save(async () => {
+            console.log("here")
             req.session.user_id = user.id;
             req.session.logged_in = true;
-            
-            res.render("homepage",{logged_in:req.session.logged_in});
+            res.status(200).json({message:"Yuh"})
         })
     }
     catch (err){
@@ -58,15 +59,17 @@ router.post('/signup',async (req,res)=>{
 
 router.post('/logout',async (req,res)=>{
     try{
-        if(req.sessions.logged_in){
-            req.session.destroy(() =>{
-                res.status(204).end()
+        console.log(req)
+        if(req.session.logged_in){
+            req.session.destroy(async () =>{
+                res.status(200).rendirect('/').end()
             })
         } else{
             res.status(404).end()
         }
     }
     catch(err){
+        console.log(err)
         res.status(500).end()
     }
 })
