@@ -26,7 +26,8 @@ async function getHomeData(id){
             output.push({
                 name: project.name,
                 description: project.description,
-                user: user.username
+                user: user.username,
+                id: project.id
             })
         }
     })
