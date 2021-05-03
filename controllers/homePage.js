@@ -17,12 +17,61 @@ async function getDashboardData(){
     return output
 }
 
+async function getHomeData(id){
+    output = []
+    const projects = await Project.findAll()
+    projects.map(async (project) => {
+        if (project.user_id == id){
+            const user = await User.findByPk(project.user_id)
+            output.push({
+                name: project.name,
+                description: project.description,
+                user: user.username
+            })
+        }
+    })
+    return output
+}
+
 router.get("/", async (req, res) => {
     try{
-        console.log(req.session.logged_in)
-        const renderedData = await getDashboardData().then(output => {
-        res.status(200).render('homepage', { projects: output, logged_in:req.session.logged_in })
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(async user =>{
+            const projects = await getHomeData(req.session.user_id).then(async output=> {
+                res.render("homepage",{
+                    logged_in:req.session.logged_in,
+                    projects:output,
+                    user:user.username
+                })
+            })
         })
+        }
+        else{
+            res.redirect("/login")
+        }
+    }
+    catch (err){
+        res.json(err)
+    }
+})
+
+router.get("/dashboard", async (req,res) => {
+    try{
+        console.log(req.session.logged_in)
+        const renderedData = await getDashboardData().then(async output => {
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(user =>{
+                res.render('dashboard', {
+                    logged_in:req.session.logged_in,
+                    user:user.username,
+                    projects:output
+                })
+            })
+        }
+        else{
+            res.render('dashboard',{projects:output})
+        }
+       })
     }
     catch (err){
         res.json(err)
@@ -31,7 +80,15 @@ router.get("/", async (req, res) => {
 
 router.get("/login", async (req,res) => {
     try{
-        res.render('login',{logged_in:req.session.logged_in})
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(user=>{
+                res.render('login',{logged_in:req.session.logged_in, user:user.username })
+            })
+        }
+        else{
+            res.render('login',{logged_in:req.session.logged_in})
+        }
+        
     }
     catch(err){
         res.json(err)
@@ -40,7 +97,15 @@ router.get("/login", async (req,res) => {
 
 router.get("/logoutConfirm",async (req,res)=>{
     try{
-        res.render("logoutConfirm",{logged_in:req.session.logged_in})
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(user=>{
+                res.render('logoutConfirm',{logged_in:req.session.logged_in, user:user.username })
+            })
+        }
+        else{
+            res.render('logoutConfirm',{logged_in:req.session.logged_in})
+        }
+        
     }
     catch(err){
         res.json(err)
@@ -49,45 +114,49 @@ router.get("/logoutConfirm",async (req,res)=>{
 
 router.get("/signup", async (req,res) => {
     try{
-        res.render('signup',{logged_in:req.session.logged_in})
-    }
-    catch(err){
-        res.json(err)
-    }
-})
-
-router.get("/dashboard", async (req,res) => {
-    try{
-        console.log(req.session.user_id)
-        output = []
-        const projects = await Project.findAll()
-        projects.map(async (project) => {
-            const user = await User.findByPk(project.user_id)
-            output.push({
-                name: project.name,
-                description: project.description,
-                user: user.username
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(user=>{
+                res.render('signup',{logged_in:req.session.logged_in, user:user.username })
             })
-        })
-        res.status(200).render('homepage', { projects: output, logged_in:req.session.logged_in })
-    }
-    catch (err){
-        res.json(err)
-    }
-})
-
-router.get('/loginConfirm', (req,res) => {
-    try{
-        res.render("loginConfirm",{logged_in:req.session.logged_in})
+        }
+        else{
+            res.render('signup',{logged_in:req.session.logged_in})
+        }
+        
     }
     catch(err){
         res.json(err)
     }
 })
 
-router.get('/signUpConfirm', (req,res) => {
+router.get('/loginConfirm', async (req,res) => {
     try{
-        res.render("signUpConfirm",{logged_in:req.session.logged_in})
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(user=>{
+                res.render('loginConfirm',{logged_in:req.session.logged_in, user:user.username })
+            })
+        }
+        else{
+            res.render('loginConfirm',{logged_in:req.session.logged_in})
+        }
+        
+    }
+    catch(err){
+        res.json(err)
+    }
+})
+
+router.get('/signUpConfirm', async (req,res) => {
+    try{
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(user=>{
+                res.render('signUpConfirm',{logged_in:req.session.logged_in, user:user.username })
+            })
+        }
+        else{
+            res.render('signUpConfirm',{logged_in:req.session.logged_in})
+        }
+        
     }
     catch(err){
         res.json(err)
