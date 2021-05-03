@@ -12,7 +12,7 @@ document.querySelector("#loginButton").addEventListener("click", async () => {
        })
 
        if (response.ok) {
-        document.location.replace('/loginConfirm');
+        document.location.replace('/');
        }
        else{
         alert('Failed to log in.');
