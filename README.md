@@ -26,7 +26,7 @@ Once you have logged in, you may view the posts you've made.
 
 ### 5. Home
 
-If you wish to see other posts you can go to the homepage. You
+If you wish to see other posts you can go to the homepage.
 
 ![homepage](./images/home.png)
 
