@@ -187,4 +187,20 @@ router.get('/edit/:id', async (req, res) => {
     }
 })
 
+router.get("/createPost", async (req,res) =>{
+    try{
+        if(req.session.logged_in){
+            await User.findByPk(req.session.user_id).then(user =>{
+            res.status(200).render("new",{logged_in:req.session.logged_in,user:user.username})
+            })
+        }
+        else{
+            throw err
+        }
+    }
+    catch (err){
+        throw err
+    }
+})
+
 module.exports = router
