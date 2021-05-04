@@ -12,9 +12,12 @@
       {{this.user}}
   </div>
   <div class="card-body">
-    <h5 class="card-title">{{this.title}}</h5>
+    <h5 class="card-title">{{this.name}}</h5>
     <p class="card-text">{{this.description}}</p>
-    <a href="#" class="btn btn-primary">Read More</a>
+    <a id="editButton {{this.id}}" href="/" class="btn btn-primary">Edit Post</a>
+    <a id="deleteButton {{this.id}}" href="/" class="btn btn-primary">Delete Post</a>
   </div>
 </div>
 {{/each}}
+
+<script src="/js/homepage.js"></script>
