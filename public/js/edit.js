@@ -6,10 +6,10 @@ document.querySelector("#deleteButton").addEventListener("click", async function
     }).then(response => window.location.href = "/")
 })
 
-document.querySelector("#saveButton").addEventListener("click", async function(){
+getSavedData = async () => {
     id = document.querySelector("#projectId").innerHTML.trim()
     projectName = document.querySelector("#projectName").value
-    projectDescription = document.querySelector("#projectDescription").innerHTML
+    projectDescription = document.querySelector("#projectDescription").value
     user = document.querySelector("#username").innerHTML.trim()
 
     output = {
@@ -18,9 +18,17 @@ document.querySelector("#saveButton").addEventListener("click", async function()
         description:projectDescription,
         user:user
     }
-    console.log(output)
-    await fetch(`api/projects/${id}`,{
-        method:'PUT',
-        body:output
-    })
+    return output
+}
+
+document.querySelector("#saveButton").addEventListener("click", async function(){
+    
+    const body = await getSavedData()
+    await fetch(`/api/projects/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }).then(response => window.location.href = "/")
 })
