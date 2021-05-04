@@ -10,3 +10,11 @@
 .jumbotron{
     margin:60px;
 }
+
+.input-group-text{
+    height:70px;
+}
+
+.btn-danger{
+    margin:10px;
+}
