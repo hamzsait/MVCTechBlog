@@ -5,6 +5,11 @@
     "user_id":1
   },
   {
+    "name": "Music Away From Me",
+    "description": "A mobile app that will send you notifications whenever a concert isn't playing in your area.",
+    "user_id":1
+  },
+  {
     "name": "The Ultimate Tech Quiz",
     "description": "A web app that will give users 10 new technical questions each day and track their progress in things like programming, cybersecurity, database architecture, and more!",
     "user_id":2
