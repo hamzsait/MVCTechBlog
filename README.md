@@ -4,7 +4,7 @@ In this week's assignment we were asked to make a tech blog website.
 
 ### 1. Getting Started
 
-To access the website, simply click this link.
+To access the website, simply click this link: [MVC Tech Blog](https://mvctech.herokuapp.com/)
 
 ### 2. Sign Up
 
