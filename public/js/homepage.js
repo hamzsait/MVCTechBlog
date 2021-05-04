@@ -1,7 +1,6 @@
 buttons = document.querySelectorAll(".btn-primary")
-
-for (button of buttons){
+buttons.forEach(async button =>{
     button.addEventListener("click",async(res) => {
         window.location.href = "edit/" + button.id.split(" ")[1]
     })
-}
+})
