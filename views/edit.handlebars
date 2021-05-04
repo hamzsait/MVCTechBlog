@@ -9,20 +9,20 @@
 
 <div class="card">
   <div id = "projectId" class="card-header">
-      {{projects.id}}
+   {{projects.id}}
   </div>
   <div class="card-body">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-default">Project Title</span>
         </div>
-        <input value="{{projects.name}}" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <input id="projectName" value="{{projects.name}}" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="input-group">
         <div class="input-group-prepend">
         <span class="input-group-text">Project Description</span>
     </div>
-        <textarea class="form-control" aria-label="With textarea">{{projects.description}}</textarea>
+        <textarea id="projectDescription" class="form-control" aria-label="With textarea">{{projects.description}}</textarea>
     </div>
     <a id = "saveButton" class="btn btn-primary">Save Post</a>
     <a id = "deleteButton" class="btn btn-danger">Delete Post</a>
