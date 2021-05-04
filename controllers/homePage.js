@@ -164,4 +164,27 @@ router.get('/signUpConfirm', async (req,res) => {
     }
 })
 
+router.get('/edit/:id', async (req, res) => {
+    try{
+        await Project.findByPk(req.params.id).then(async (answer) => {
+                if(req.session.logged_in){
+                    if(req.session.user_id == answer.dataValues.user_id){
+                        await User.findByPk(req.session.user_id).then(user=>{
+                            res.status(200).render('edit',{logged_in:req.session.logged_in, projects:answer.dataValues,user:user.username})
+                        })
+                }
+                else{
+                    throw err
+                }
+            }
+            else{
+                throw err
+            }
+        })
+    }
+    catch{
+        res.status(404).json("Access Denied")
+    }
+})
+
 module.exports = router
