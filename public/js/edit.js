@@ -33,5 +33,5 @@ document.querySelector("#saveButton").addEventListener("click", async function()
     }).then(response => {
         window.location.href = "/"
         location.reload()
-    )
+    })
 })
