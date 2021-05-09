@@ -20,30 +20,35 @@ async function getDashboardData(){
 async function getHomeData(id){
     output = []
     const projects = await Project.findAll()
-    projects.map(async (project) => {
-        if (project.user_id == id){
-            const user = await User.findByPk(project.user_id)
-            output.push({
+    projects.forEach(async(project) => {
+        if (project.dataValues.user_id == id){
+            const user = await User.findByPk(project.dataValues.user_id)
+            await output.push({
                 name: project.name,
                 description: project.description,
                 user: user.username,
                 id: project.id
             })
         }
+        if (projects[projects.length - 1] === project){
+            //console.log("HRERERE")
+            console.log(output)
+            return output
+        }
     })
-    return output
 }
 
 router.get("/", async (req, res) => {
     try{
         if(req.session.logged_in){
             await User.findByPk(req.session.user_id).then(async user =>{
-            const projects = await getHomeData(req.session.user_id).then(async output=> {
-                res.render("homepage",{
-                    logged_in:req.session.logged_in,
-                    projects:output,
-                    user:user.username
-                })
+                await getHomeData(req.session.user_id).then(async output=> {
+                    console.log(output)
+                    res.render("homepage",{
+                        logged_in:req.session.logged_in,
+                        projects:output,
+                        user:user.username
+                    })
             })
         })
         }
