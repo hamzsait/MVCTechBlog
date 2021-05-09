@@ -20,10 +20,10 @@ async function getDashboardData(){
 async function getHomeData(id){
     output = []
     const projects = await Project.findAll()
-    projects.forEach(async(project) => {
+    projects.forEach((project) => {
         if (project.dataValues.user_id == id){
-            const user = await User.findByPk(project.dataValues.user_id)
-            await output.push({
+            const user = User.findByPk(project.dataValues.user_id)
+            output.push({
                 name: project.name,
                 description: project.description,
                 user: user.username,
@@ -33,6 +33,7 @@ async function getHomeData(id){
         if (projects[projects.length - 1] === project){
             //console.log("HRERERE")
             console.log(output)
+            console.log("^The Line Above is line 35^")
             return output
         }
     })
@@ -41,16 +42,17 @@ async function getHomeData(id){
 router.get("/", async (req, res) => {
     try{
         if(req.session.logged_in){
-            await User.findByPk(req.session.user_id).then(async user =>{
-                await getHomeData(req.session.user_id).then(async output=> {
-                    console.log(output)
-                    res.render("homepage",{
-                        logged_in:req.session.logged_in,
-                        projects:output,
-                        user:user.username
-                    })
+            const userData = await User.findByPk(req.session.user_id).then(async user =>{
+                console.log(user)
+                const homedata = await getHomeData(req.session.user_id)
+                console.log(homedata)
+                console.log("^The Line Above is line 46^")
+                res.render("homepage",{
+                    logged_in:req.session.logged_in,
+                    projects:output,
+                    user:user.username
+                })
             })
-        })
         }
         else{
             res.redirect("/login")
