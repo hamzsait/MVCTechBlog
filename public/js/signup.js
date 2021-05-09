@@ -21,7 +21,6 @@ document.querySelector("#signupButton").addEventListener("click", async () => {
 
             if (response.ok) {
                 document.location.replace('/');
-                location.reload()
             } else if(response.status == 403) {
                 alert("User already exits!")
             } else {
