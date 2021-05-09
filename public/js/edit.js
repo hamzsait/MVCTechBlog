@@ -30,5 +30,8 @@ document.querySelector("#saveButton").addEventListener("click", async function()
           'Content-type': 'application/json'
         },
         body: JSON.stringify(body)
-    }).then(response => window.location.href = "/")
+    }).then(response => {
+        window.location.href = "/"
+        location.reload()
+    )
 })
