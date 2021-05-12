@@ -8,7 +8,7 @@ To access the website, simply click this link: [MVC Tech Blog](https://mvctech.h
 
 ### 2. Sign Up
 
-In order to create, edit and delete posts you will need to create an account. You can
+In order to create, edit and delete posts you will need to create an account. You need to sign up!
 
 ![signup](./images/signin.png)
 
